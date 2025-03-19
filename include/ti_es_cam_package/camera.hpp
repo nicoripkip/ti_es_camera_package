@@ -24,6 +24,8 @@ public:
 
 	int 				initCamera();
 	int 				configureCamera();
+	int 				startCamera();
+	int 				stopCamera();
 
 	struct VideoFrame*	captureVideoFrame();
 			

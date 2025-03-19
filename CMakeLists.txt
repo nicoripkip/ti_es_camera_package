@@ -26,9 +26,10 @@ include_directories(
 )
 
 
-add_executable(ti_es_cam_node src/ti_es_cam_node.cpp)
+add_executable(ti_es_cam_node src/ti_es_cam_node.cpp src/camera.cpp)
 target_include_directories(ti_es_cam_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/ti_es_cam_package>
   $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
 target_link_libraries(ti_es_cam_node ${OPENCV_LIBRARIES} ASICamera2)
 target_compile_features(ti_es_cam_node PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
