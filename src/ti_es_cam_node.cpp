@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <opencv2/opencv.hpp>
 #include <ASICamera2.h>
+#include "ti_es_cam_package/camera.hpp"
 
 
 #define CAM_WIDTH   1280
@@ -12,6 +13,7 @@ int main(int argc, char ** argv)
 {
   (void) argc;
   (void) argv;
+
 
   int cameras = ASIGetNumOfConnectedCameras();
 
