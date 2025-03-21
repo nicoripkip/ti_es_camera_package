@@ -27,10 +27,19 @@ public:
   CameraNode() 
     : Node("camera_node")
   {
+    // Setup publishers
+    this->_loggerPublisher          = this->create_publisher<std_msgs::msg::String>("ti/es/logger_data", 10);
+    this->_videoDataPublisher       = this->create_publisher<std_msgs::msg::String>("ti/es/video_data", 10);
 
+    // Setup subscribers
+    this->_videoConfigSubscription  = this->create_subscription<std_msgs::msg::String>(
+        "ti/es/video_config", 
+        10, 
+        std::bind(&CameraNode::camConfigCallback, this, std::placeholders::_1)
+    ); 
 
     // Set the timers
-    this->controlLoop = this->create_wall_timer(
+    this->controlLoop               = this->create_wall_timer(
       1ms, 
       std::bind(&CameraNode::controlLoopCallback, this)
     );
@@ -110,9 +119,16 @@ public:
 
 
 private:
-  rclcpp::TimerBase::SharedPtr  controlLoop;
-  Camera*                       _astrocam;
-  bool                          _astrocamEnabled;
+  rclcpp::TimerBase::SharedPtr                            controlLoop;
+  Camera*                                                 _astrocam;
+  bool                                                    _astrocamEnabled;
+
+  // Publishers
+  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr     _loggerPublisher;
+  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr     _videoDataPublisher;
+
+  // Subscribers
+  rclcpp::Subscription<std_msgs::msg::String>::SharedPtr  _videoConfigSubscription;
 
 
   /**
@@ -142,12 +158,15 @@ private:
   /**
    * @brief This callback is used when configurations are published to the cam
    * 
+   * @param msg
    */
-  void camConfigCallback()
+  void camConfigCallback(std_msgs::msg::String::SharedPtr msg)
   {
     uint32_t  exposure  = 0;
     uint8_t   gain      = 0;
     uint8_t   bandwidth = 0;
+
+    std::cout << "Data: " << msg << "\n";
 
     bool condition = false;
 
