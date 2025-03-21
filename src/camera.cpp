@@ -5,6 +5,11 @@
 #include <iostream>
 
 
+const uint32_t 	DEFAULT_EXPOSURE_TIME 				= 1000;
+const uint8_t	DEFAULT_GAIN_VALUE					= 20;
+const uint8_t	DEFAULT_BANDWIDTH_OVERLOAD_VALUE	= 40;
+
+
 /**
  * @brief Constructor
  * 
@@ -91,9 +96,9 @@ int Camera::initCamera()
 	ASIInitCamera(this->_cameraInfo->CameraID);
 
 	// Set values to configure the camera
-	this->setExposureValue(1000);
-	this->setGainValue(20);
-	this->setBandWidthOverloadValue(40);
+	this->setExposureValue(DEFAULT_EXPOSURE_TIME);
+	this->setGainValue(DEFAULT_GAIN_VALUE);
+	this->setBandWidthOverloadValue(DEFAULT_BANDWIDTH_OVERLOAD_VALUE);
 
 	// Try to configure the camera
 	int r = this->configureCamera();

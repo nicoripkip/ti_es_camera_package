@@ -13,6 +13,7 @@ find_package(ament_cmake REQUIRED)
 
 
 find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(PkgConfig REQUIRED)
@@ -31,6 +32,7 @@ target_include_directories(ti_es_cam_node PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/ti_es_cam_package>
   $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+ament_target_dependencies(ti_es_cam_node rclcpp std_msgs)
 target_link_libraries(ti_es_cam_node ${OPENCV_LIBRARIES} ASICamera2)
 target_compile_features(ti_es_cam_node PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
